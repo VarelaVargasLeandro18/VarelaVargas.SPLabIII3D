@@ -1,0 +1,26 @@
+{
+  "Animales": [
+    {
+      "id": 1,
+      "descripcion": "",
+      "transaccion": "ventas",
+      "precio": "",
+      "animal": "perro",
+      "titulo": "",
+      "raza": "",
+      "fechaNac": "",
+      "vacuna": "ELEGIR OPCION"
+    },
+    {
+      "id": 2,
+      "descripcion": "",
+      "transaccion": "ventas",
+      "precio": "",
+      "animal": "perro",
+      "titulo": "",
+      "raza": "",
+      "fechaNac": "",
+      "vacuna": "ELEGIR OPCION"
+    }
+  ]
+}

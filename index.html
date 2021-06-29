@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+
+    <link
+      rel="stylesheet"
+      href="./node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+
+    <title>Segundo Parcial</title>
+  </head>
+  <body>
+    <header class="bg-light container-fluid">
+      <nav class="navbar navbar-dark row align-items-start">
+        <div class="navbar-brand">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/2018_Animal_Planet_logo.svg/800px-2018_Animal_Planet_logo.svg.png"
+            alt="Animal Planet Logo"
+            height="50"
+          />
+        </div>
+
+        <ul
+          class="
+            list-unstyled list-inline
+            flex-end
+            row
+            align-items-end
+            justify-content-center
+          "
+        >
+          <li class="list-inline-item"><a href="#">Nosotros</a></li>
+          <li class="list-inline-item"><a href="#">Anuncios</a></li>
+          <li class="list-inline-item"><a href="#">Blog</a></li>
+          <li class="list-inline-item"><a href="#">Contactos</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <!-- #region Imagen -->
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <h2>Administracion</h2>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-12 col-xl-6 text-center">
+            <img
+              style="width: 100%"
+              class="img-fluid rounded mx-auto"
+              src="https://www.lavanguardia.com/files/image_948_465/uploads/2019/10/02/5fa53234969ff.jpeg"
+              alt="Animales de la Selva"
+            />
+          </div>
+        </div>
+      </div>
+      <!-- #endregion -->
+
+      <form class="container-fluid mt-3" action="#">
+        <fieldset class="container-fluid bg-light border">
+          <div class="row">
+            <legend class="h1">Informacion Del Anuncio</legend>
+          </div>
+
+          <input type="number" name="id" value="0" hidden />
+
+          <!-- #region Titulo -->
+          <div class="row justify-content-start">
+            <div class="form-group col-6">
+              <label for="titulo"> Titulo: </label>
+              <input
+                class="form-control"
+                size="50"
+                type="text"
+                name="titulo"
+                id="titulo"
+                placeholder="Titulo"
+                required
+              />
+              <small class="form-text text-muted"
+                >Largo máximo 50 caracteres</small
+              >
+            </div>
+          </div>
+          <!-- #endregion -->
+
+          <!-- #region Descripción -->
+          <div class="container-fluid">
+            <div class="row justify-content-start">
+              <div class="form-group-col-6">
+                <label for="descripcion"> Descripcion: </label>
+                <input
+                  class="form-control"
+                  type="text"
+                  name="descripcion"
+                  id="descripcion"
+                  placeholder="Descripción"
+                  size="50"
+                  required
+                />
+                <small class="form-text text-muted"
+                  >Largo máximo 50 caracteres</small
+                >
+              </div>
+            </div>
+          </div>
+          <!-- #endregion -->
+
+          <!-- #region ANIMAL -->
+          <fieldset class="mt-2 bg-light">
+            <legend class="h1">ANIMAL</legend>
+
+            <div class="row">
+              <div class="col-4">
+                <div class="form-check form-check-inline">
+                  <label for="perro">
+                    Perro:
+                    <input
+                      type="radio"
+                      name="animal"
+                      value="perro"
+                      id="perro"
+                      checked
+                      required
+                    />
+                  </label>
+                </div>
+              </div>
+
+              <div class="col-4">
+                <div class="form-check form-check-inline">
+                  <label for="gato">
+                    Gato:
+                    <input
+                      type="radio"
+                      name="animal"
+                      value="gato"
+                      id="gato"
+                      required
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <!-- #endregion -->
+
+          <!-- #region Precio -->
+          <div class="mt-4 row justify-content-start">
+            <div class="from-group col-6">
+              <label for="precio"> Precio: </label>
+              <input
+                class="form-control"
+                type="number"
+                step="0.01"
+                name="precio"
+                id="precio"
+                placeholder="Precio"
+                size="50"
+                required
+              />
+            </div>
+          </div>
+          <!-- #endregion -->
+
+          <div class="mt-4 row justify-space-between">
+            <!-- #region Raza -->
+            <div class="form-group form-check-inline col-3">
+              
+              <label for="raza">
+                <img style="height: 25px;" src="https://www.ecestaticos.com/imagestatic/clipping/9da/18c/9da18cdc3b033ca0375e7b9c1394c0d0/has-conseguido-que-llore-perdio-a-su-perro-pidio-ayuda-en-las-redes-y-esto-es-lo-que-paso.jpg?mtime=1579565836" 
+                alt="Perro">
+              </label>
+              <input
+                class="form-control"
+                type="text"
+                name="raza"
+                id="raza"
+                placeholder="Raza"
+                required
+              />
+              
+            </div>
+            <!-- #endregion -->
+
+            <!-- #region Fecha Nacimiento -->
+            <div class="form-group form-check-inline col-4">
+
+              <label for="fechaNac">
+                <img 
+                style="height: 25px"
+                src="data:image/jpeg;base64,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" alt="Nacimiento" srcset="">
+              </label>
+
+              <input
+                class="form-control"
+                type="date"
+                name="fechaNac"
+                id="fechaNac"
+                required
+              />
+            </div>
+            <!-- #endregion -->
+
+            <!-- #region Vacunado -->
+            <div class="form-group form-check-inline col-4">
+              <label for="vacuna">
+                <img 
+                style="height: 25px;"
+                src="https://estaticos-cdn.elperiodico.com/clip/58bdc6e8-c2e6-46ad-bef7-07fc48da0903_alta-libre-aspect-ratio_default_0.jpg" alt="">
+              </label>
+              <select class="form-control" name="vacuna" id="vacuna" required>
+                <option hidden disabled selected>ELEGIR OPCION</option>
+                <option value="Si">SI</option>
+                <option value="No">NO</option>
+              </select>
+            </div>
+            <!-- #endregion -->
+          </div>
+        </fieldset>
+
+        <!-- #region Botones -->
+        <div class="mt-3 mb-3 container-fluid">
+          <div class="row justify-content-around">
+            <button class="btn btn-primary" id="guardar">Guardar</button>
+            <button class="btn btn-secondary" id="eliminar">Eliminar</button>
+            <button class="btn btn-primary" id="cancelar">Cancelar</button>
+          </div>
+        </div>
+        <!-- #endregion -->
+      </form>
+
+      <!-- #region Tabla Carga -->
+      <div class="container-fluid">
+        <div class="row">
+          <table
+            class="table table-bordered table-striped table-hover table-lg"
+          >
+            <thead class="thead-dark">
+              <tr>
+                <th>Id</th>
+                <th>Descripcion</th>
+                <th>Transaccion</th>
+                <th>Precio</th>
+                <th>Animal</th>
+                <th>Titulo</th>
+                <th>Raza</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Vacuna</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- #endregion -->
+
+      <div class="container-fluid">
+        <!-- #region Filtros -->
+        <div class="row mt-3 border bg-danger">
+          <div class="col-12 text-center">
+            <h1>Filtros</h1>
+          </div>
+        </div>
+
+        <div class="row border bg-danger">
+          <div class="col-5">
+            <small class="form-text">Filtrado:</small>
+            <select id="filtrado" class="form-control" name="Filtrado" id="">
+              <option selected value="Todos">Todos</option>
+              <option value="perro">Perros</option>
+              <option value="gato">Gatos</option>
+            </select>
+          </div>
+
+          <div class="col-5">
+            <small class="form-text">Promedio</small>
+            <input type="number" disabled name="" id="promedio" />
+          </div>
+        </div>
+        <!-- #endregion -->
+
+        <!-- #region Campos Mostrados -->
+        <div class="row bg-warning mt-2">
+          <div class="col-12 text-center">
+            <h1>Campos Mostrados</h1>
+          </div>
+        </div>
+
+        <div class="row bg-warning border">
+          <div class="col-1">
+            <div class="form-check form-check-inline">
+              <input type="checkbox" value="id" name="id" id="" class="form-check" />
+              <label for="id" class="form-check-label">Id</label>
+            </div>
+          </div>
+
+          <div class="col-1">
+            <div class="form-check form-check-inline">
+              <input type="checkbox" value="titulo" name="titulo" id="" class="form-check" />
+              <label for="titulo" class="form-check-label">Titulo</label>
+            </div>
+          </div>
+
+          <div class="col-2">
+            <div class="form-check form-check-inline">
+              <input
+                value="descripcion"
+                type="checkbox"
+                name="descripcion"
+                id=""
+                class="form-check"
+              />
+              <label for="descripcion" class="form-check-label"
+                >Descripcion</label
+              >
+            </div>
+          </div>
+
+          <div class="col-1">
+            <div class="form-check form-check-inline">
+              <input value="animal" type="checkbox" name="animal" id="" class="form-check" />
+              <label for="animal" class="form-check-label">Animal</label>
+            </div>
+          </div>
+
+          <div class="col-2">
+            <div class="form-check form-check-inline">
+              <input
+                type="checkbox"
+                name="transaccion"
+                id=""
+                class="form-check"
+              />
+              <label for="transaccion" class="form-check-label"
+                >Transaccion</label
+              >
+            </div>
+          </div>
+
+          <div class="col-1">
+            <div class="form-check form-check-inline">
+              <input value="precio" type="checkbox" name="precio" id="" class="form-check" />
+              <label for="precio" class="form-check-label">Precio</label>
+            </div>
+          </div>
+
+          <div class="col-1">
+            <div class="form-check form-check-inline">
+              <input value="raza" type="checkbox" name="raza" id="" class="form-check" />
+              <label for="raza" class="form-check-label">Raza</label>
+            </div>
+          </div>
+
+          <div class="col-1">
+            <div class="form-check form-check-inline">
+              <input value="fecha" type="checkbox" name="fecha" id="" class="form-check" />
+              <label for="fecha" class="form-check-label">Fecha</label>
+            </div>
+          </div>
+
+          <div class="col-1">
+            <div class="form-check form-check-inline">
+              <input value="vacuna" type="checkbox" name="vacuna" id="" class="form-check" />
+              <label for="vacuna" class="form-check-label">Vacuna</label>
+            </div>
+          </div>
+        </div>
+        <!-- #endregion -->
+
+        <!-- #region Tabla Filtros -->
+        <div class="row mt-3">
+          <table
+            id="t-filtro"
+            class="table table-bordered table-striped table-hover table-lg"
+          >
+            <thead id="th-filtro" class="thead-light">
+              <!-- #region Theads Originales -->
+              <!-- <tr>
+                <th>Id</th>
+                <th>Titulo</th>
+                <th>Transaccion</th>
+                <th>Descripcion</th>
+                <th>Precio</th>
+                <th>Animal</th>
+                <th>Raza</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Vacuna</th>
+              </tr> -->
+              <!-- #endregion -->
+            </thead>
+
+            <tbody id="tb-filtro"></tbody>
+          </table>
+        </div>
+        <!-- #endregion -->
+      </div>
+    </main>
+
+    <footer class="container-fluid bg-light">
+      <div class="row align-items-center">
+        <nav class="ml-3 navbar navbar-dark row align-items-start col-7">
+          <ul
+            class="
+              list-unstyled list-inline
+              flex-end
+              row
+              align-items-end
+              justify-content-center
+            "
+          >
+            <li class="list-inline-item"><a href="#">Nosotros</a></li>
+            <li class="list-inline-item"><a href="#">Anuncios</a></li>
+            <li class="list-inline-item"><a href="#">Blog</a></li>
+            <li class="list-inline-item"><a href="#">Contactos</a></li>
+          </ul>
+        </nav>
+        <div class="col-4">Todos los derechos Reservados 2021 &copy;</div>
+      </div>
+
+    </footer>
+
+  </body>
+  <script src="./js/script.js" type="module"></script>
+  <script src="./js/Anuncio_Mascota.js" type="module"></script>
+
+  <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="./node_modules/popper.js/dist/popper.min.js"></script>
+</html>
