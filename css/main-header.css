@@ -1,0 +1,28 @@
+.main-header {
+    text-align: center;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.main-logo {
+    color: rgba(112, 103, 103, 0.5);
+    text-transform: uppercase;
+}
+
+.img-main {
+    width: 90%;
+    box-shadow: 0 0 10px 3px gray;
+}
+
+.img-container {
+    margin: 1em;
+}
+
+
+@media screen and (max-width: 768px) {
+
+    .img-container {
+        display: none;
+    }
+
+}

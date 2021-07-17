@@ -1,0 +1,35 @@
+@import url('./Spinner/spinner.css');
+@import url('./button.css');
+@import url('./header&footer.css');
+@import url('./main-header.css');
+@import url('./form.css');
+@import url('./tabla.css');
+
+/* FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    background-color: rgba(255, 252, 239, 0.253);
+}
+
+.custom-alert {
+    position: absolute;
+    width: 10em;
+    height: 3em;
+    text-align: center;
+    background-color: black;
+    color: white;
+    top: 50vh;
+    left: 50vw;
+}
+
+.no-display {
+    display: none;
+}
+
+.display-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
