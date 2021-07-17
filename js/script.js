@@ -89,12 +89,12 @@ function asignarEventListeners() {
                 columnas.push(selected.value)
         } );
         
-        let anuncios = filtrarPorPropiedades(getAnuncios(), columnas);
         let anunciosXAnimal = (valorFiltrado === "Todos") ? anuncios : filtrarPorAnimal( valorFiltrado, getAnuncios() );
+        let anuncios = filtrarPorPropiedades(anunciosXAnimal, columnas);
         
         crearTablaDinamica(
             columnas,
-            anunciosXAnimal,
+            anuncios,
             $("#th-filtro"),
             $("#tb-filtro")
         );
@@ -107,7 +107,8 @@ function asignarEventListeners() {
 
 function getAnuncios() {
     //return cargarDeLocalStorage('animales');
-    return getMascotasBD(ultimoId);
+    let ret = getMascotasBD(ultimoId);
+    return ret;
 }
 
 function postMascotas(mascota) {

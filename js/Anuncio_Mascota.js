@@ -235,9 +235,9 @@ function crearTablaDinamica (headElem, anuncios, DOMThead, DOMTbody) {
 }
 
 function filtrarPorPropiedades (anuncios, propiedades) {
-    
     return anuncios.map( (value) => {
         const nuevoObj = {};
+        console.log(propiedades)
         
         for (const propiedad of propiedades) {
             nuevoObj[propiedad] = value[propiedad];
@@ -287,11 +287,12 @@ function postMascotaADB (mascota) {
     
 }
 
-async function getMascotasBD (ultimoId) {
+function getMascotasBD (ultimoId) {
     
     const xhr = new XMLHttpRequest();
+    let mascotas = null;
 
-    xhr.onreadystatechange = (event) => {
+    /* xhr.onreadystatechange = async (event) => {
         const state = xhr.readyState;
 
         if ( state === XMLHttpRequest.DONE ) {
@@ -299,14 +300,22 @@ async function getMascotasBD (ultimoId) {
                 const mascotas = JSON.parse(xhr.responseText);
                 agregarVariosATabla( mascotas );
                 ultimoId[0] = ++mascotas[ mascotas.length - 1 ].id;
+                ret.push(mascotas);
             }
         }
 
-    }
+    } */
 
-    xhr.open( 'GET', 'http://localhost:5000/Animales', true );
+    xhr.open( 'GET', 'http://localhost:5000/Animales', false );
     xhr.send();
 
+    if ( xhr.status >= 200 && xhr.status < 299 || xhr.status === 304 ) {
+        mascotas = JSON.parse(xhr.responseText);
+        agregarVariosATabla( mascotas );
+        ultimoId[0] = ++mascotas[ mascotas.length - 1 ].id;
+    }
+
+    return mascotas;
 }
 
 /* fetch ( 'http://localhost:5000/Animales' )

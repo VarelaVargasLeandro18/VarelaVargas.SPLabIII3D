@@ -2,25 +2,25 @@
   "Animales": [
     {
       "id": 1,
-      "descripcion": "",
+      "descripcion": "ventas",
       "transaccion": "ventas",
-      "precio": "",
+      "precio": "43.3",
       "animal": "perro",
-      "titulo": "",
-      "raza": "",
-      "fechaNac": "",
-      "vacuna": "ELEGIR OPCION"
+      "titulo": "A",
+      "raza": "Gran Danes",
+      "fechaNac": "2021-07-01",
+      "vacuna": "Si"
     },
     {
       "id": 2,
-      "descripcion": "",
+      "descripcion": "GFAS",
       "transaccion": "ventas",
-      "precio": "",
+      "precio": "432",
       "animal": "perro",
-      "titulo": "",
-      "raza": "",
-      "fechaNac": "",
-      "vacuna": "ELEGIR OPCION"
+      "titulo": "Grran Danes con pedigree frances",
+      "raza": "gfas",
+      "fechaNac": "2321-03-31",
+      "vacuna": "Si"
     }
   ]
 }
