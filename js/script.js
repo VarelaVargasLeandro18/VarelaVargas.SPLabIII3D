@@ -1,6 +1,6 @@
 const $ = (query) => document.querySelector(query);
 let ultimoId = 1;
-const tiempoSpinner = 1500;
+const tiempoSpinner = 1;
 
 import { 
     removerSpinner, 
@@ -16,7 +16,8 @@ import {
     cargarDeLocalStorage,
     agregarVariosATabla,
     eliminarDeLocalStoragePorId,
-    updateDeLocalStoragePorId
+    updateDeLocalStoragePorId,
+    Anuncio_Mascota
 } from './Anuncio_Mascota.js';
 
 import {
@@ -40,7 +41,6 @@ function asignarEventListeners() {
         if ( event.target.matches('#guardar') ) {
 
             const id = parseInt($('form').id.value);
-            console.log(id)
             if ( id <= 0 ) {
                 mostrarAlert('Guardando...');
             }
@@ -54,21 +54,19 @@ function asignarEventListeners() {
                 
                 if ( id <= 0 ) {
                     mascota.id = ultimoId++;
-                    agregarMascotaATabla(mascota);
-                    cargarAlLocalStorage(mascota, 'animales');
+                    agregarMascota( mascota, 'animales' );
                     removerSpinner();
                     $('form').reset();
                     noMostrarAlert();
                     return
                 }
 
-                updateDeLocalStoragePorId(id, 'animales', mascota);
-                eliminarPorId(id, $('tbody'));
-                agregarMascotaATabla(mascota);
+                updateMascota(mascota);
                 removerSpinner();
                 $('form').reset();
                 noMostrarAlert();
             }, tiempoSpinner );
+            
         }
 
         if ( event.target.matches("#eliminar") ) {
@@ -84,8 +82,7 @@ function asignarEventListeners() {
                     return
                 }
                 
-                eliminarPorId( id, $('tbody') );
-                eliminarDeLocalStoragePorId(id, 'animales');
+                deleteMascota( id );
                 removerSpinner();
                 noMostrarAlert();
             }, tiempoSpinner );
@@ -130,23 +127,59 @@ function vaciarNodo ( nodo = document.createElement('') ) {
     nodo.innerText = '';
 }
 
-(function main() {
+/* #region CRUD Functions */
+/**
+ * Agrega una mascota a BBDD, a LocalStorage y a tabla.
+ * @param {Anuncio_Mascota} mascota - La mascota a agregar. 
+ * @param {string} nombreLocal - Nombre de la local Storage
+ */
+function agregarMascota( mascota, nombreLocal ) {
+    agregarMascotaATabla(mascota);
+    cargarAlLocalStorage(mascota, nombreLocal);
+}
+
+/**
+ * Elimina una mascota de BBDD y tabla.
+ * @param {number} id - Id de la mascota a eliminar. 
+ */
+function deleteMascota( id ) {
+    eliminarPorId( id, $('tbody') );
+    eliminarDeLocalStoragePorId( id, 'animales' );
+}
+
+/**
+ * Actualiza una mascota en BBDD y en Tabla.
+ * @param {Anuncio_Mascota} mascota - La mascota a updattear 
+ */
+function updateMascota( mascota ) {
+    const id = mascota.id;
+    updateDeLocalStoragePorId(id, 'animales', mascota);
+    eliminarPorId(id, $('#main-tbody'));
+    agregarMascotaATabla(mascota);
+}
+
+/**
+ * Obtiene las mascotas de BBDD y las agrega a la tabla.
+ */
+function getMascotas() {
     let max = -1;
     let mascotas = cargarDeLocalStorage('animales');
     agregarVariosATabla(mascotas);
 
     if ( Array.isArray(mascotas) && mascotas.length > 0 ){
         
-        mascotas.map( (value) => {
+        mascotas.forEach( (value) => {
             if (value.id > max){
                 max = value.id
-                return true
             }
-            return false
-        } )[0].id;
+        } );
     }
+
     ultimoId = ++max;
+}
+/* #endregion */
 
+(function main() {
+    getMascotas();
     asignarEventListeners();
-
 })();

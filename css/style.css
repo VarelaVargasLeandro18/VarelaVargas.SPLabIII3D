@@ -1,9 +1,9 @@
 @import url('./Spinner/spinner.css');
-@import url('./button.css');
-@import url('./header&footer.css');
+/* @import url('./button.css'); */
+/* @import url('./header&footer.css'); 
 @import url('./main-header.css');
 @import url('./form.css');
-@import url('./tabla.css');
+@import url('./tabla.css'); */
 
 /* FONTS */
 @import url('https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@300;400;600&display=swap');
@@ -32,4 +32,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media screen and (max-width: 767px) {
+
+    .img-container {
+        display: none;
+    }
+
 }

@@ -1,77 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ES-es">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" href="./css/style.css">
-    <link rel="shortcut icon" href="css/imagenes/icono.png" type="image/x-icon">
-    
-    <title>Primer Parcial</title>
+    <link rel="shortcut icon" href="./css/imagenes/icono.png" type="image/x-icon">
+
+    <title>Segundo Parcial</title>
 </head>
 
 <body>
 
     <div id="custom-alert" class="custom-alert no-display">
-        
+
     </div>
 
     <!-- #region Header -->
-    <header class="header">
-        <div class="logo-container"><img class="logo"
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/2018_Animal_Planet_logo.svg/800px-2018_Animal_Planet_logo.svg.png"
-                alt="Animal Planet Logo"></div>
+    <header class="bg-light container-fluid">
 
-        <label for="expand" class="lbl-expand">
-            <img class="expand-logo" src="css/imagenes/menu.png" alt="menu">
-        </label>
-        <input class="expand-btn" type="checkbox" name="" id="expand">
+        <nav class="navbar row align-items-center">
+            <div class="navbar-brand">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/2018_Animal_Planet_logo.svg/800px-2018_Animal_Planet_logo.svg.png"
+                    alt="Animal Planet Logo" height="50" />
+            </div>
 
-        <nav class="nav-bar">
-            <ul class="ul-header">
-                <li class="li-header"><a class="link" href="#">Nosotros</a></li>
-                <li class="li-header"><a class="link" href="#">Anuncios</a></li>
-                <li class="li-header"><a class="link" href="#">Blog</a></li>
-                <li class="li-header"><a class="link" href="#">Contactos</a></li>
+            <ul>
+                <li class="list-inline-item"><a href="#">Nosotros</a></li>
+                <li class="list-inline-item"><a href="#">Anuncios</a></li>
+                <li class="list-inline-item"><a href="#">Blog</a></li>
+                <li class="list-inline-item"><a href="#">Contactos</a></li>
             </ul>
         </nav>
+
     </header>
+
     <!-- #endregion -->
 
     <main>
 
         <!-- #region Main-Header -->
-        <div class="main-header">
-            <h2 class="main-logo">Administracion</h2>
+        <div class="container-fluid mb-3">
+            <h2 class="text-center">Administracion</h2>
             <div class="img-container">
-                <img class="img-main" src="css/imagenes/img-main.jpeg" alt="Animales de la Selva">
+                <img class="img-fluid mx-auto d-block" src="css/imagenes/img-main.jpeg" alt="Animales de la Selva">
             </div>
         </div>
         <!-- #endregion -->
 
-        <form class="form" action="#">
-            <fieldset class="info-fs">
+        <!-- #region Form -->
+        <form class="container-fluid" action="#">
+
+            <fieldset class="container-fluid bg-light border">
                 <legend class="form-legend">Informacion Del Anuncio</legend>
 
-                <input type="number" name="id" value="0" hidden>
+                <input type="number" name="id" value=0 hidden>
 
                 <!-- #region Título, Descripción -->
-                <div class="tit-desc-container">
-                    <label for="titulo">
-                        Titulo: <input class="text" type="text" name="titulo" id="titulo" placeholder="Titulo" size="50"
-                            required>
+                <fieldset class="form-group mt-3 mb-3">
+                    <label class="mb-3" for="titulo">
+                        Titulo:
+                        <input style="max-width: 60%;" type="text" name="titulo" id="titulo" placeholder="Titulo"
+                            size="50" required>
                     </label>
                     <label for="descripcion">
-                        Descripcion: <input class="text" type="text" name="descripcion" id="descripcion"
+                        Descripcion:
+                        <input style="max-width: 60%;" type="text" name="descripcion" id="descripcion"
                             placeholder="Descripción" size="50" required>
                     </label>
-                </div>
+                </fieldset>
                 <!-- #endregion -->
 
                 <!-- #region Tipo-Animal -->
-                <fieldset class="animal-fs">
+                <fieldset class="form-group mb-3 px-3 border">
                     <legend>ANIMAL</legend>
                     <label for="perro">
                         Perro: <input class="radio" type="radio" name="animal" value="perro" id="perro" required>
@@ -82,75 +88,87 @@
                 </fieldset>
                 <!-- #endregion -->
 
-                <label class="lbl-precio" for="precio">
-                    Precio: <input class="number" type="number" step="0.01" name="precio" id="precio"
-                        placeholder="Precio" size="50" required>
+                <!-- #region Precio -->
+                <label class="mb-3" for="precio">
+                    Precio:
+                    <input class="number" type="number" step="0.01" name="precio" id="precio" placeholder="Precio"
+                        size="50" required>
                 </label>
+                <!-- #endregion -->
 
                 <!-- #region Raza, Fecha y Vacuna -->
-                <div class="inner-fs">
-                    <label for="raza">
-                        <img class="lbl-logo" src="css/imagenes/dog-labrador-brown-animal.jpg" alt="Raza">
-                        <input class="text" type="text" name="raza" id="raza" placeholder="Raza" required>
-                    </label>
-
-                    <label for="fechaNac">
-                        <img class="lbl-logo" src="css/imagenes/calendario.png" alt="Calendario">
-                        <input class="date" type="date" name="fechaNac" id="fechaNac" required>
-                    </label>
-
-                    <label for="vacuna">
-                        <img class="lbl-logo" src="css/imagenes/the-syringe-4319227_1280.webp" alt="Vacuna">
-                        <select class="select" name="vacuna" id="vacuna" required>
-                            <option hidden disabled selected>ELEGIR OPCION</option>
-                            <option value="Si">SI</option>
-                            <option value="No">NO</option>
-                        </select>
-                    </label>
-
+                <div class="container-fluid border">
+                    <fieldset class="row justify-content-around">
+                        <label for="raza">
+                            <i class="fa fa-paw" aria-hidden="true"></i>
+                            <input class="text" type="text" name="raza" id="raza" placeholder="Raza" required>
+                        </label>
+                        <label for="fechaNac">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            <input class="date" type="date" name="fechaNac" id="fechaNac" required>
+                        </label>
+                        <label for="vacuna">
+                            <i class="fa fa-ambulance"></i>
+                            <select class="select" name="vacuna" id="vacuna" required>
+                                <option hidden disabled selected>TIENE VACUNA?</option>
+                                <option value="Si">SI</option>
+                                <option value="No">NO</option>
+                            </select>
+                        </label>
+                    </fieldset>
                 </div>
+
+
                 <!-- #endregion -->
 
                 <!-- #region Pelaje -->
-                <div class="multi-select">
-                
+                <div class="row justify-content-around">
+
                     <label for="marron">
                         Marron
                         <input type="checkbox" name="pelaje" id="marron" value="marron">
                     </label>
-    
+
                     <label for="amarillo">
                         Amarillo
                         <input type="checkbox" name="pelaje" id="amarillo" value="amarillo">
                     </label>
-    
+
                     <label for="negro">
                         Negro
                         <input type="checkbox" name="pelaje" id="negro" value="negro">
                     </label>
-    
+
                 </div>
                 <!-- #endregion -->
 
             </fieldset>
 
             <!-- #region Buttons -->
-            <div class="btns-container">
-                <button class="button" id="guardar">
-                    <img src="css/imagenes/guardar.png" class="lbl-btn">
+            <div class="row justify-content-between mt-4 mb-4 mx-auto">
+                <button class="btn btn-success" id="guardar">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i>
                     Guardar
                 </button>
-                <button class="button" id="eliminar">Eliminar</button>
-                <button class="button" id="cancelar">Cancelar</button>
+                <button class="btn btn-danger" id="eliminar">Eliminar</button>
+                <button class="btn btn-warning" id="cancelar">Cancelar</button>
             </div>
             <!-- #endregion -->
 
         </form>
+        <!-- #endregion -->
 
         <!-- #region Table -->
-        <div class="table-container">
-            <table class="table">
-                <thead class="thead">
+        <div class="container-fluid">
+            <table class="
+                col-12
+                table 
+                table-dark 
+                table-bordered 
+                table-striped 
+                table-hover">
+
+                <thead class="thead bg-danger">
                     <tr>
                         <th>Id</th>
                         <th>Descripcion</th>
@@ -165,7 +183,7 @@
                     </tr>
                 </thead>
 
-                <tbody class="tbody">
+                <tbody id="main-tbody">
                 </tbody>
 
             </table>
@@ -174,24 +192,122 @@
 
     </main>
 
-    <!-- #region Footer -->
-    <footer class="footer">
-        <nav class="nav-bar">
-            <ul class="ul-footer">
-                <li class="li-footer"><a class="link" href="#">Nosotros</a></li>
-                <li class="li-footer"><a class="link" href="#">Anuncios</a></li>
-                <li class="li-footer"><a class="link" href="#">Blog</a></li>
-                <li class="li-footer"><a class="link" href="#">Contactos</a></li>
-            </ul>
-        </nav>
-        <div class="copyright">
-            <p>Todos los derechos reservados &copy;</p>
+    <!-- #region Campos a Mostrar -->
+    <div class="container-fluid">
+        <div class="row justify-content-around">
+            <label for="tipo">
+                Filtrar Animal 
+                <select name="tipo" id="tipo">
+                    <option value="Todos">Todos</option>
+                    <option value="Perro">Perro</option>
+                    <option value="Gato">Gato</option>
+                </select>
+            </label>
+            <label for="promedio">
+                Promedio
+                <input type="number" name="promedio" id="promedio" disabled>
+            </label>
         </div>
+
+        <div class="row justify-content-around">
+            
+            <label class="form-check form-check-inline" for="titulo">
+                <input type="checkbox" name="titulo" value="titulo">
+                TÍTULO
+            </label>
+            
+            <label class="form-check form-check-inline" for="transaccion">
+                <input type="checkbox" name="transaccion" value="transaccion">
+                TRANSACCIÓN
+            </label>
+            
+            <label class="form-check form-check-inline" for="descripcion">
+                <input type="checkbox" name="descripcion" value="descripcion">
+                DESCRIPCIÓN
+            </label>
+            
+            <label class="form-check form-check-inline" for="precio">
+                <input type="checkbox" name="precio" value="precio">
+                PRECIO
+            </label>
+            
+            <label class="form-check form-check-inline" for="animal">
+                <input type="checkbox" name="animal" value="animal">
+                ANIMAL
+            </label>
+            
+            <label class="form-check form-check-inline" for="raza">
+                <input type="checkbox" name="raza" value="raza">
+                RAZA
+            </label>
+            
+            <label class="form-check form-check-inline" for="fecha">
+                <input type="checkbox" name="fecha" value="fecha">
+                FECHA
+            </label>
+            
+            <label class="form-check form-check-inline" for="vacuna">
+                <input type="checkbox" name="vacuna" value="vacuna">
+                VACUNA
+            </label>
+
+            <label for="pelaje">
+                <input type="checkbox" name="pelaje" value="pelaje">
+                PELAJE
+            </label>
+        </div>
+    </div>
+    <!-- #endregion -->
+
+    <!-- #region Tabla Filtros -->
+    <div class="container-fluid mt-3">
+        <table id="t-filtro" class="table table-bordered table-striped table-hover table-lg">
+            <thead id="th-filtro" class="thead-light">
+                <!-- #region Theads Originales -->
+                <!-- <tr>
+                    <th>Id</th>
+                    <th>Titulo</th>
+                    <th>Transaccion</th>
+                    <th>Descripcion</th>
+                    <th>Precio</th>
+                    <th>Animal</th>
+                    <th>Raza</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>Vacuna</th>
+                </tr> -->
+                <!-- #endregion -->
+            </thead>
+
+            <tbody id="tb-filtro"></tbody>
+        </table>
+    </div>
+    <!-- #endregion -->
+
+    <!-- #region Footer -->
+    <footer class="container-fluid bg-dark">
+
+        <div class="row px-3 pt-3">
+            <div style="color:white">Todos los derechos reservados &copy;</div>
+
+            <nav class="row mr-0 align-items-center mx-0 ">
+                <ul>
+                    <li class="list-inline-item"><a class="link" href="#">Nosotros</a></li>
+                    <li class="list-inline-item"><a class="link" href="#">Anuncios</a></li>
+                    <li class="list-inline-item"><a class="link" href="#">Blog</a></li>
+                    <li class="list-inline-item"><a class="link" href="#">Contactos</a></li>
+                </ul>
+            </nav>
+        </div>
+
     </footer>
     <!-- #endregion -->
 
 </body>
+
 <script src="./js/script.js" type="module"></script>
 <script src="./js/Anuncio_Mascota.js" type="module"></script>
+
+<script src="./node_modules/jquery/dist/jquery.min.js"></script>
+<script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 </html>

@@ -28,7 +28,7 @@ class Anuncio_Mascota extends Anuncio {
 }
 
 function crearMascotaDeForm ({ form = $('form') }) {
-    const id = form.id.value;
+    const id = parseInt(form.id.value);
     const titulo = form.titulo.value;
     const descripcion = form.descripcion.value;
     const precio = form.precio.value;
@@ -43,8 +43,6 @@ function crearMascotaDeForm ({ form = $('form') }) {
             pelaje.push(checkbox.value);
         }
     }
-
-    console.log(pelaje)
 
     return new Anuncio_Mascota ( {
         id,
@@ -143,7 +141,7 @@ function eliminarPorId ( id, tbody = document.createElement('tbody') ) {
         if ( elem.nodeType === Node.ELEMENT_NODE ) {
             const tr_id = parseInt(elem.getAttribute('mascota-id'));
             
-            if ( parseInt( tr_id ) === id ) {
+            if ( parseInt( tr_id ) == id ) {
                 elem.remove();
                 return
             }
