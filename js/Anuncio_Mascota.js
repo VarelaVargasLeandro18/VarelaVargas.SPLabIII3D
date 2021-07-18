@@ -27,6 +27,7 @@ class Anuncio_Mascota extends Anuncio {
 
 }
 
+/* #region GUI funcionts */
 function crearMascotaDeForm ({ form = $('form') }) {
     const id = parseInt(form.id.value);
     const titulo = form.titulo.value;
@@ -57,25 +58,6 @@ function crearMascotaDeForm ({ form = $('form') }) {
         pelaje
     } );
 }
-
-/* function cargarAForm ( {
-    form = $('form'),
-    mascota = null
-} ) {
-
-    if ( !form || !mascota ) return;
-
-    form.id.value = mascota.id;
-    form.titulo.value = mascota.titulo;
-    form.descripcion.value = mascota.descripcion;
-    form.precio.value = mascota.precio;
-    form.animal.value = mascota.animal;
-    form.raza.value = mascota.raza;
-    form.fechaNac.value = mascota.fechaNac.value;
-    form.vacuna.value = mascota.fechaNac.value;
-    form.pelaje.value = mascota.pelaje;
-
-} */
 
 function agregarMascotaATabla ( mascota ) {
     const fragmentForTr = document.createDocumentFragment();
@@ -150,6 +132,7 @@ function eliminarPorId ( id, tbody = document.createElement('tbody') ) {
     });
 
 }
+/* #endregion */
 
 /* #region Local Storage */
 function cargarAlLocalStorage( anuncio, localName ) {
@@ -223,6 +206,47 @@ function updateDeLocalStoragePorId ( Id, localName, anuncio ) {
 }
 /* #endregion */
 
+async function leerTodasDeBD(url) {
+
+    try {
+
+        const response = await fetch( url );
+        const json = await response.json();
+
+        if ( json === null )
+            throw new Error("No se pudo obtener la data.");
+
+        return json;
+    }
+    catch ( error ) {
+        console.error(error);
+    }
+
+}
+
+function postBD ( mascota, url ) {
+
+    try {
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+            const state = xhr.readyState;
+            const httpStatus = xhr.status;
+            
+            if ( state === XMLHttpRequest.DONE &&
+                httpStatus >= 200 && httpStatus < 300 ) {
+                    console.log( xhr.responseText, 'Respuesta de POST' );
+                }
+
+        }
+        xhr.open( 'POST', url, true );
+        xhr.setRequestHeader( 'Content-Type', 'application/json; charset=utf-8' );
+        xhr.send( JSON.stringify(mascota) );
+    } catch (error) {
+        console.error(error);
+    }
+    
+}
+
 export { 
         Anuncio_Mascota, 
         crearMascotaDeForm, 
@@ -233,5 +257,7 @@ export {
         cargarDeLocalStorage,
         agregarVariosATabla,
         eliminarDeLocalStoragePorId,
-        updateDeLocalStoragePorId
+        updateDeLocalStoragePorId,
+        leerTodasDeBD,
+        postBD
 };

@@ -1,6 +1,7 @@
 const $ = (query) => document.querySelector(query);
 let ultimoId = 1;
 const tiempoSpinner = 1;
+const url = 'http://localhost:5000/Animales';
 
 import { 
     removerSpinner, 
@@ -17,7 +18,9 @@ import {
     agregarVariosATabla,
     eliminarDeLocalStoragePorId,
     updateDeLocalStoragePorId,
-    Anuncio_Mascota
+    Anuncio_Mascota,
+    leerTodasDeBD,
+    postBD
 } from './Anuncio_Mascota.js';
 
 import {
@@ -135,6 +138,7 @@ function vaciarNodo ( nodo = document.createElement('') ) {
  */
 function agregarMascota( mascota, nombreLocal ) {
     agregarMascotaATabla(mascota);
+    postBD(mascota, url);
     cargarAlLocalStorage(mascota, nombreLocal);
 }
 
@@ -161,9 +165,10 @@ function updateMascota( mascota ) {
 /**
  * Obtiene las mascotas de BBDD y las agrega a la tabla.
  */
-function getMascotas() {
+async function getMascotas() {
     let max = -1;
-    let mascotas = cargarDeLocalStorage('animales');
+    /* let mascotas = cargarDeLocalStorage('animales'); */
+    let mascotas = await leerTodasDeBD(url);
     agregarVariosATabla(mascotas);
 
     if ( Array.isArray(mascotas) && mascotas.length > 0 ){
@@ -176,10 +181,13 @@ function getMascotas() {
     }
 
     ultimoId = ++max;
+
+
 }
 /* #endregion */
 
 (function main() {
+    console.warn("USANDO LIVE-SERVER SE ACTUALIZA CADA VEZ QUE UN ARCHIVO DEL DIRECTORIO SE ACTUALIZA. (en este caso animales.json");
     getMascotas();
     asignarEventListeners();
 })();
