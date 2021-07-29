@@ -206,6 +206,7 @@ function updateDeLocalStoragePorId ( Id, localName, anuncio ) {
 }
 /* #endregion */
 
+/* #region CRUD functions */
 async function leerTodasDeBD(url) {
 
     try {
@@ -219,7 +220,8 @@ async function leerTodasDeBD(url) {
         return json;
     }
     catch ( error ) {
-        console.error(error);
+        throw error; 
+        // Realizo un throw ya que sin leer los objetos de BD no se puede seguir
     }
 
 }
@@ -234,7 +236,7 @@ function postBD ( mascota, url ) {
             
             if ( state === XMLHttpRequest.DONE &&
                 httpStatus >= 200 && httpStatus < 300 ) {
-                    console.log( xhr.responseText, 'Respuesta de POST' );
+                    console.log( 'POST Realizado correctamente.' );
                 }
 
         }
@@ -245,6 +247,77 @@ function postBD ( mascota, url ) {
         console.error(error);
     }
     
+}
+
+function updateBD ( mascota, url ) {
+
+    try {
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+            const state = xhr.readyState;
+            const httpStatus = xhr.status;
+            
+            if ( state === XMLHttpRequest.DONE &&
+                httpStatus >= 200 && httpStatus < 300 ) {
+                    console.log( 'PUT Realizado correctamente.' );
+                }
+
+        }
+        xhr.open( 'PUT', url + `/${mascota.id}/`, true );
+        xhr.setRequestHeader( 'Content-Type', 'application/json; charset=utf-8' );
+        xhr.send( JSON.stringify(mascota) );
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
+function deleteBD ( id, url ) {
+    
+    const headers = new Headers();
+    const method = 'DELETE';
+    headers.append( 'Content-Type', 'application/json; charset=utf-8' );
+    fetch( url + `/${id}/`, { headers, method } )
+    .then( (response) => response?.ok ? response.json() : Promise.reject(response) )
+    .then( (jsonResponse) => console.log(jsonResponse) )
+    .catch( (error) => console.error(error) );
+
+}
+/* #endregion */
+
+function obtenerPromedioPrecio ( mascotas ) {
+    
+    if ( !Array.isArray(mascotas) || mascotas.length <= 0 ) return 0;
+    
+    let prom = mascotas.map( (value) => parseFloat(value.precio) )
+                .reduce( (accum, current) => accum + current );
+    prom /= mascotas.length;
+    return Math.round ( prom * 100 ) / 100;
+}
+
+function filtrarPorRaza ( mascotas, raza = "Todos" ) {
+    if ( raza === "Todos" ) return mascotas;
+
+    return mascotas.filter( (value) => value.animal.toLowerCase() === raza.toLowerCase() );
+}
+
+function filtrarPropiedades ( mascotas, props ) {
+
+    const ret = mascotas.map( (value) => {
+
+        const keys = Object.keys( value );
+        let newValue = {};
+
+        for (const key of keys) {
+            if ( props.includes(key) || key === "id" ) {
+                newValue[key] = value[key];
+            };
+        }
+
+        return newValue;
+    } )
+
+    return ret;
 }
 
 export { 
@@ -259,5 +332,10 @@ export {
         eliminarDeLocalStoragePorId,
         updateDeLocalStoragePorId,
         leerTodasDeBD,
-        postBD
+        postBD,
+        updateBD,
+        deleteBD,
+        obtenerPromedioPrecio,
+        filtrarPorRaza,
+        filtrarPropiedades
 };

@@ -1,4 +1,5 @@
 const $ = (query) => document.querySelector(query);
+const $all = (query) => document.querySelectorAll(query);
 let ultimoId = 1;
 const tiempoSpinner = 1;
 const url = 'http://localhost:5000/Animales';
@@ -20,7 +21,12 @@ import {
     updateDeLocalStoragePorId,
     Anuncio_Mascota,
     leerTodasDeBD,
-    postBD
+    postBD,
+    updateBD,
+    deleteBD,
+    obtenerPromedioPrecio,
+    filtrarPorRaza,
+    filtrarPropiedades
 } from './Anuncio_Mascota.js';
 
 import {
@@ -91,7 +97,7 @@ function asignarEventListeners() {
             }, tiempoSpinner );
         }
 
-        if ( event.target.matches('td') ) {
+        if ( event.target.matches('#main-tbody>tr>td') ) {     
             agregarSpinner({});
             setTimeout( () => {
                 const tr = event.target.parentElement;
@@ -107,6 +113,11 @@ function asignarEventListeners() {
                 form.reset();
                 removerSpinner();
             }, tiempoSpinner );
+        }
+
+        if ( event.target.matches('#tipo') ||
+            event.target.matches("input[type='checkbox']") ) {
+            realizarFiltrado();
         }
 
     } );
@@ -147,6 +158,7 @@ function agregarMascota( mascota, nombreLocal ) {
  * @param {number} id - Id de la mascota a eliminar. 
  */
 function deleteMascota( id ) {
+    deleteBD(id, url);
     eliminarPorId( id, $('tbody') );
     eliminarDeLocalStoragePorId( id, 'animales' );
 }
@@ -158,6 +170,7 @@ function deleteMascota( id ) {
 function updateMascota( mascota ) {
     const id = mascota.id;
     updateDeLocalStoragePorId(id, 'animales', mascota);
+    updateBD(mascota, url);
     eliminarPorId(id, $('#main-tbody'));
     agregarMascotaATabla(mascota);
 }
@@ -170,6 +183,7 @@ async function getMascotas() {
     /* let mascotas = cargarDeLocalStorage('animales'); */
     let mascotas = await leerTodasDeBD(url);
     agregarVariosATabla(mascotas);
+    localStorage.setItem('animales', JSON.stringify(mascotas));
 
     if ( Array.isArray(mascotas) && mascotas.length > 0 ){
         
@@ -181,13 +195,93 @@ async function getMascotas() {
     }
 
     ultimoId = ++max;
-
-
+    return mascotas;
 }
 /* #endregion */
 
-(function main() {
+function obtenerTipo () {
+    return $("select[name='tipo']").value;
+}
+
+function obtenerPropiedadesAMostrar () {
+
+    const propsChecks = $all("input[name='check-prop']");
+    let props = [];
+
+    propsChecks.forEach ( (check) => {
+        
+        if ( check.checked ) props.push( check.value );
+    
+    } );
+
+    return props;
+}
+
+function crearTablaDePropiedadesMascota ( animales, tbody = $("#tb-filtro"), thead = $("#th-filtro") ) {
+
+    if ( !Array.isArray(animales) && !animales.length ) return
+
+    const ths = document.createDocumentFragment();
+    const props = Object.keys(animales[0]);
+
+    props.forEach( (value) => {
+        const th = document.createElement('th');
+        const thText = document.createTextNode(value);
+        th.appendChild( thText );
+        ths.appendChild(th);
+    } );
+
+    const trs = document.createDocumentFragment();
+    animales.forEach( (animal) => {
+        const tr = document.createElement('tr');
+        const keys = Object.keys(animal);
+
+        keys.forEach( (key) => {
+            const td = document.createElement('td');
+            const tdText = document.createTextNode( animal[key] );
+            td.appendChild(tdText);
+            tr.appendChild(td);
+        } )
+
+        trs.appendChild(tr);
+    } );
+
+    vaciarNodo(thead);
+    vaciarNodo(tbody);
+
+    thead.appendChild(ths);
+    tbody.appendChild(trs);
+}
+
+function settearPromedio (mascotas) {
+    $('#promedio').value = obtenerPromedioPrecio(mascotas);
+}
+
+async function realizarFiltrado ( animales = cargarDeLocalStorage('animales') ) {
+    const raza = obtenerTipo();
+    const props = obtenerPropiedadesAMostrar();
+    settearPromedio(animales);
+    
+    animales = filtrarPorRaza( animales, raza );
+    animales = filtrarPropiedades( animales, props );
+
+    crearTablaDePropiedadesMascota( animales );
+}
+
+(async function main() {
     console.warn("USANDO LIVE-SERVER SE ACTUALIZA CADA VEZ QUE UN ARCHIVO DEL DIRECTORIO SE ACTUALIZA. (en este caso animales.json");
-    getMascotas();
+    
+    try {
+        agregarSpinner({});
+        const mascotas = await getMascotas();
+        realizarFiltrado(mascotas);
+    } catch( error ) {
+        console.error(error);
+        realizarFiltrado();
+    }
+
+    removerSpinner();
+
     asignarEventListeners();
+
 })();

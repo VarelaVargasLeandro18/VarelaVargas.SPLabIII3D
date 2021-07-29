@@ -1,7 +1,4 @@
-export function agregarSpinner ( { parentElement = null } ) {
-
-    if ( !parentElement )
-        parentElement = document.body;
+export function agregarSpinner ( { parentElement = document.body } ) {
 
     const fragmentSpinner = document.createDocumentFragment();
 
