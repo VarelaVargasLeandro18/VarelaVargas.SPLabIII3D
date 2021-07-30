@@ -240,7 +240,7 @@ function postBD ( mascota, url ) {
                 }
 
         }
-        xhr.open( 'POST', url, true );
+        xhr.open( 'POST', url, false );
         xhr.setRequestHeader( 'Content-Type', 'application/json; charset=utf-8' );
         xhr.send( JSON.stringify(mascota) );
     } catch (error) {
@@ -263,7 +263,7 @@ function updateBD ( mascota, url ) {
                 }
 
         }
-        xhr.open( 'PUT', url + `/${mascota.id}/`, true );
+        xhr.open( 'PUT', url + `/${mascota.id}/`, false );
         xhr.setRequestHeader( 'Content-Type', 'application/json; charset=utf-8' );
         xhr.send( JSON.stringify(mascota) );
     } catch (error) {

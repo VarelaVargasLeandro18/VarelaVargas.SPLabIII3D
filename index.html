@@ -195,17 +195,33 @@
     <!-- #region Campos a Mostrar -->
     <div class="container-fluid">
         <div class="row justify-content-around">
-            <label for="tipo">
-                Filtrar Animal 
-                <select name="tipo" id="tipo">
-                    <option value="Todos">Todos</option>
-                    <option value="Perro">Perro</option>
-                    <option value="Gato">Gato</option>
-                </select>
-            </label>
+            <div class="dropdown mb-3">
+                <button 
+                    class="btn btn-primary dropdown-toggle"
+                    data-toggle="dropdown">
+                    Filtrar Animal
+                </button>
+                <div id="tipo" class="dropdown-menu">
+                    <option class="dropdown-item" value="Todos">Todos</option>
+                    <option class="dropdown-item" value="Perro">Perro</option>
+                    <option class="dropdown-item" value="Gato">Gato</option>
+                </div> 
+            </div>
             <label for="promedio">
                 Promedio
-                <input type="number" name="promedio" id="promedio" disabled>
+                <input type="text" name="promedio" id="promedio" disabled>
+            </label>
+            <label for="maximo">
+                Maximo
+                <input type="text" name="maximo" id="maximo" disabled>
+            </label>
+            <label for="minimo">
+                Minimo
+                <input type="text" name="minimo" id="minimo" disabled>
+            </label>
+            <label for="porcentaje">
+                Porcentaje Animales Vacunados
+                <input type="text" name="porcentaje" id="porcentaje" disabled>
             </label>
         </div>
 

@@ -4,6 +4,8 @@ let ultimoId = 1;
 const tiempoSpinner = 1;
 const url = 'http://localhost:5000/Animales';
 
+let lastClickedFilterOption = '';
+
 import { 
     removerSpinner, 
     agregarSpinner 
@@ -34,6 +36,8 @@ import {
 } from './form-validation.js';
 
 function asignarEventListeners() {
+
+    asignarListenerAOptions();
 
     document.body.addEventListener( 'click', (event) => {
 
@@ -67,6 +71,7 @@ function asignarEventListeners() {
                     removerSpinner();
                     $('form').reset();
                     noMostrarAlert();
+                    realizarFiltrado();
                     return
                 }
 
@@ -74,6 +79,7 @@ function asignarEventListeners() {
                 removerSpinner();
                 $('form').reset();
                 noMostrarAlert();
+                realizarFiltrado();
             }, tiempoSpinner );
             
         }
@@ -94,6 +100,7 @@ function asignarEventListeners() {
                 deleteMascota( id );
                 removerSpinner();
                 noMostrarAlert();
+                realizarFiltrado();
             }, tiempoSpinner );
         }
 
@@ -124,6 +131,8 @@ function asignarEventListeners() {
 
 }
 
+/* #region GUI */
+/* #region Alert */
 function mostrarAlert ( texto ) {
     const divAlert = $('#custom-alert');
     vaciarNodo(divAlert);
@@ -136,10 +145,12 @@ function noMostrarAlert () {
     const divAlert = $('#custom-alert');
     divAlert.classList.remove('display-flex');
 }
+/* #endregion */
 
 function vaciarNodo ( nodo = document.createElement('') ) {
     nodo.innerText = '';
 }
+/* #endregion */
 
 /* #region CRUD Functions */
 /**
@@ -199,9 +210,7 @@ async function getMascotas() {
 }
 /* #endregion */
 
-function obtenerTipo () {
-    return $("select[name='tipo']").value;
-}
+/* #region Tabla Propiedades */
 
 function obtenerPropiedadesAMostrar () {
 
@@ -252,29 +261,19 @@ function crearTablaDePropiedadesMascota ( animales, tbody = $("#tb-filtro"), the
     thead.appendChild(ths);
     tbody.appendChild(trs);
 }
-
-function settearPromedio (mascotas) {
-    $('#promedio').value = obtenerPromedioPrecio(mascotas);
-}
-
-async function realizarFiltrado ( animales = cargarDeLocalStorage('animales') ) {
-    const raza = obtenerTipo();
-    const props = obtenerPropiedadesAMostrar();
-    settearPromedio(animales);
-    
-    animales = filtrarPorRaza( animales, raza );
-    animales = filtrarPropiedades( animales, props );
-
-    crearTablaDePropiedadesMascota( animales );
-}
+/* #endregion */
 
 (async function main() {
     console.warn("USANDO LIVE-SERVER SE ACTUALIZA CADA VEZ QUE UN ARCHIVO DEL DIRECTORIO SE ACTUALIZA. (en este caso animales.json");
     
     try {
         agregarSpinner({});
+        mostrarAlert('CARGANDO MASCOTAS...');
         const mascotas = await getMascotas();
-        realizarFiltrado(mascotas);
+
+        if ( !cargarFiltradoPrevio() )
+            realizarFiltrado(mascotas);
+
     } catch( error ) {
         console.error(error);
         realizarFiltrado();
@@ -283,5 +282,171 @@ async function realizarFiltrado ( animales = cargarDeLocalStorage('animales') ) 
     removerSpinner();
 
     asignarEventListeners();
+    noMostrarAlert();
 
 })();
+
+/* =====================================
+   =              RECU                 =
+   ===================================== */
+
+/* #region  Filtrado */
+async function realizarFiltrado ( animales = cargarDeLocalStorage('animales') ) {
+    
+    const raza = obtenerTipo();
+    const props = obtenerPropiedadesAMostrar();
+    
+    animales = filtrarPorRaza( animales, raza );
+    
+    settearPromedio(animales);
+    settearMaximo(animales);
+    settearMinimo(animales);
+    settearPorc_Vac(animales);
+
+    animales = filtrarPropiedades( animales, props );
+
+
+    crearTablaDePropiedadesMascota( animales );
+
+    // Ejercicio 2 - Agregar al localStorage para después cargar automáticamente:
+    localStorage.setItem( 'filtrados', JSON.stringify(animales) );
+        
+}
+
+function changeAnimalTypeListener ( event ) {
+    lastClickedFilterOption = event.target.value;
+    realizarFiltrado();
+}
+
+function asignarListenerAOptions ( options = $all('option') ) {
+
+    options.forEach( (elem) => elem.addEventListener( 'click', changeAnimalTypeListener ) )
+
+}
+
+function obtenerTipo () {
+    //return $("select[name='tipo']").value;
+    return lastClickedFilterOption || "Todos";
+}
+/* #endregion */
+
+/* #region Filtrado Previo */
+function cargarFiltradoPrevio () {
+
+    const filtrados = JSON.parse(localStorage.getItem('filtrados'));
+    
+    if ( filtrados != null && filtrados != '' && filtrados != [] ) {
+        
+        crearTablaDePropiedadesMascota(filtrados);
+        settearCheckboxes( filtrados[0] );
+
+        cargarMaximo();
+        cargarMinimo();
+        cargarPorc_Vac();
+        cargarPromedio();
+
+        return true;
+    }
+
+    return false;
+}
+
+function settearCheckboxes(animal) {
+
+    const properties = Object.keys(animal);
+    const checkboxes = $all('input[name=check-prop]');
+
+    properties.forEach( (property) => {
+
+        checkboxes.forEach( (checkbox) => {
+            if ( checkbox.value === property ) {
+                checkbox.checked = true;
+                return
+            }
+        } )
+    
+    } );
+
+}
+/* #endregion */
+
+/* #region Realizar Calculos */
+function calcularMaximo (animales) {
+
+    if ( animales.length === 1 )
+        return animales[0].precio;
+
+    const maximo = 
+        animales.map( (value) => parseFloat(value.precio) )
+        .reduce( (previous, current) => {
+            return (current < previous) ? previous : current 
+        });
+    
+    return maximo;
+}
+
+function calcularMinimo (animales) {
+
+    if ( animales.length === 1 )
+        return animales[0].precio;
+
+    const minimo = 
+        animales.map( (value) => parseFloat(value.precio) )
+        .reduce( (previous, current) => {
+                return (current > previous) ? previous : current 
+        });
+
+    return minimo;
+}
+
+function calcularPorcentaje (animales) {
+    const animalesVacunados = animales.filter( (value) => value.vacuna === "Si" );
+    const porcentaje = animalesVacunados.length * 100 / animales.length;
+    
+    return porcentaje;
+}
+/* #endregion */
+
+/* #region Settear Calculos */
+function settearPromedio (mascotas) {
+    const promedio = obtenerPromedioPrecio(mascotas);
+    $('#promedio').value = '$' + promedio;
+    localStorage.setItem( 'promedio', promedio );
+}
+
+function settearMaximo (animales) {
+    const maximo = calcularMaximo(animales);
+    $('#maximo').value = '$' + maximo;
+    localStorage.setItem('maximo', maximo);
+}
+
+function settearMinimo (animales) {
+    const minimo = calcularMinimo(animales)
+    $('#minimo').value = '$' + minimo;
+    localStorage.setItem('minimo', minimo);
+}
+
+function settearPorc_Vac (animales) {
+    const porcentaje = calcularPorcentaje(animales);
+    $('#porcentaje').value = porcentaje + '%';
+    localStorage.setItem('porcentaje', porcentaje);
+}
+/* #endregion */
+
+/* #region Carga de Calculos previos. */
+function cargarPromedio () {
+    $('#promedio').value = '$' + localStorage.getItem('promedio');
+}
+
+function cargarMaximo() {
+    $('#maximo').value = '$' + localStorage.getItem('maximo');
+}
+
+function cargarMinimo () {
+    $('#minimo').value = '$' + localStorage.getItem('minimo');
+}
+
+function cargarPorc_Vac() {
+    $('#porcentaje').value = localStorage.getItem('porcentaje') + '%';
+}
+/* #endregion */
